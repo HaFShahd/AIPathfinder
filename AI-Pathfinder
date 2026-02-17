@@ -115,3 +115,29 @@ def bfs(grid, start, goal):
 
         draw_grid(grid, start, goal, frontier, explored, [], "BFS")
     return None
+def dfs(grid, start, goal):
+    stack = [start]
+    visited = set()
+    parent = {start: None}
+    frontier = {start}
+    explored = set()
+
+    while stack:
+        node = stack.pop()
+        frontier.discard(node)
+
+        if node == goal:
+            return build_path(parent, start, goal)
+
+        if node not in visited:
+            visited.add(node)
+            explored.add(node)
+
+            for nbr in get_neighbors(node, grid):
+                if nbr not in visited:
+                    parent[nbr] = node
+                    stack.append(nbr)
+                    frontier.add(nbr)
+
+        draw_grid(grid, start, goal, frontier, explored, [], "DFS")
+    return None
