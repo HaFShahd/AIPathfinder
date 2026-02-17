@@ -34,3 +34,48 @@ def get_neighbors(node, grid):
         if in_bounds(nr, nc) and grid[nr][nc] != -1:
             nbrs.append((nr, nc))
     return nbrs
+
+def draw_grid(grid, start, goal, frontier, explored, path, title="Search"):
+    plt.clf()
+    ax = plt.gca()
+    ax.set_aspect('equal')
+
+    for r in range(ROWS):
+        for c in range(COLS):
+            color = "white"  
+            text = str(grid[r][c])  
+
+            if grid[r][c] == -1:
+                color = "red"
+                text = "-1"
+            if (r, c) in frontier:
+                color = "yellow"
+            if (r, c) in explored:
+                color = "lightblue"
+            if (r, c) in path:
+                color = "green"
+
+            ax.add_patch(plt.Rectangle((c, r), 1, 1, facecolor=color, edgecolor='black'))
+
+            # Draw numbers inside cells
+            if (r, c) == start:
+                text = "S"
+            elif (r, c) == goal:
+                text = "T"
+
+            ax.text(c + 0.5, r + 0.5, text, ha="center", va="center", fontsize=10, weight="bold",
+                    color="white" if color in ["red", "darkgreen", "blue"] else "black")
+
+    sr, sc = start
+    gr, gc = goal
+    ax.add_patch(plt.Rectangle((sc, sr), 1, 1, facecolor="darkgreen", edgecolor='black'))
+    ax.add_patch(plt.Rectangle((gc, gr), 1, 1, facecolor="blue", edgecolor='black'))
+
+    ax.set_xlim(0, COLS)
+    ax.set_ylim(0, ROWS)
+    ax.set_xticks(range(COLS+1))
+    ax.set_yticks(range(ROWS+1))
+    ax.invert_yaxis()
+    ax.grid(True)
+    ax.set_title(title)
+    plt.pause(DELAY)
