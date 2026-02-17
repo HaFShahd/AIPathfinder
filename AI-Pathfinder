@@ -79,3 +79,39 @@ def draw_grid(grid, start, goal, frontier, explored, path, title="Search"):
     ax.grid(True)
     ax.set_title(title)
     plt.pause(DELAY)
+
+
+def build_path(parent, start, goal):
+    path = []
+    node = goal
+    while node is not None:
+        path.append(node)
+        node = parent.get(node)
+    path.reverse()
+    return path
+
+
+def bfs(grid, start, goal):
+    queue = deque([start])
+    visited = {start}
+    parent = {start: None}
+    frontier = {start}
+    explored = set()
+
+    while queue:
+        node = queue.popleft()
+        frontier.discard(node)
+        explored.add(node)
+
+        if node == goal:
+            return build_path(parent, start, goal)
+
+        for nbr in get_neighbors(node, grid):
+            if nbr not in visited:
+                visited.add(nbr)
+                parent[nbr] = node
+                queue.append(nbr)
+                frontier.add(nbr)
+
+        draw_grid(grid, start, goal, frontier, explored, [], "BFS")
+    return None
