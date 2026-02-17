@@ -201,4 +201,51 @@ def iddfs(grid, start, goal, max_depth=15):
         if path:
             return path
     return None
+def bidirectional_search(grid, start, goal):
+    if start == goal:
+        return [start]
 
+    q_f, q_b = deque([start]), deque([goal])
+    visited_f, visited_b = {start}, {goal}
+    parent_f, parent_b = {start: None}, {goal: None}
+
+    while q_f and q_b:
+        for _ in range(len(q_f)):
+            current = q_f.popleft()
+            for nbr in get_neighbors(current, grid):
+                if nbr not in visited_f:
+                    visited_f.add(nbr)
+                    parent_f[nbr] = current
+                    q_f.append(nbr)
+                    if nbr in visited_b:
+                        return build_bidirectional_path(parent_f, parent_b, nbr)
+
+        for _ in range(len(q_b)):
+            current = q_b.popleft()
+            for nbr in get_neighbors(current, grid):
+                if nbr not in visited_b:
+                    visited_b.add(nbr)
+                    parent_b[nbr] = current
+                    q_b.append(nbr)
+                    if nbr in visited_f:
+                        return build_bidirectional_path(parent_f, parent_b, nbr)
+
+        frontier = set(q_f) | set(q_b)
+        explored = visited_f | visited_b
+        draw_grid(grid, start, goal, frontier, explored, [], "Bidirectional BFS")
+
+    return None
+
+def build_bidirectional_path(parent_f, parent_b, meet):
+    path_f, node = [], meet
+    while node is not None:
+        path_f.append(node)
+        node = parent_f[node]
+    path_f.reverse()
+
+    path_b, node = [], parent_b[meet]
+    while node is not None:
+        path_b.append(node)
+        node = parent_b[node]
+
+    return path_f + path_b
