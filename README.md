@@ -80,28 +80,44 @@ The visualization shows the frontier, explored nodes, and final path for each al
 
 Install dependencies before running:
 
-```bash
 pip install numpy matplotlib
 
 
----
+## How to Run
 
-##  How to Run
+### Run via Terminal 
 
 1. Clone the repository:
 
-```bash
 git clone https://github.com/your-username/ai-pathfinder.git
 cd ai-pathfinder
-```
 
-2. Run the program:
+2. Install dependencies:
 
-```bash
+pip install numpy matplotlib
+3. Run the program:
+
 python main.py
 
+4. Choose an algorithm from the menu when prompted.
 
-3. Choose an algorithm from the menu.
+
+### Method 2: Run in Jupyter Notebook 
+
+If you prefer Jupyter:
+
+1. Install dependencies (run once in a cell):
+
+!pip install numpy matplotlib
+
+2. Open **main.py** and copy the entire code into a Jupyter cell
+   **OR** place the file in the same directory as the notebook.
+
+3. Run using:
+
+%run main.py
+
+ The visualization window will open and the menu will appear in the output.
 
 
 ##  Expected Behavior
