@@ -249,3 +249,46 @@ def build_bidirectional_path(parent_f, parent_b, meet):
         node = parent_b[node]
 
     return path_f + path_b
+
+def run(algo="bfs"):
+    grid = create_grid()
+    start, goal = (6,7), (2,1)
+    plt.figure(figsize=(6,6))
+
+    if algo=="bfs": 
+        path=bfs(grid,start,goal)
+    elif algo=="dfs":
+        path=dfs(grid,start,goal)
+    elif algo=="ucs": 
+        path=ucs(grid,start,goal)
+    elif algo=="dls": 
+        path=dls(grid,start,goal,limit=20)
+    elif algo=="iddfs": 
+        path=iddfs(grid,start,goal,max_depth=15)
+    elif algo=="bi": 
+        path=bidirectional_search(grid,start,goal)
+    else: return
+
+    if path: draw_grid(grid,start,goal,[],[],path,f"FINAL PATH ({algo.upper()})")
+    plt.show()
+
+def menu():
+    print("AI PATHFINDER")
+    print("1. BFS\n2. DFS\n3. UCS\n4. DLS\n5. IDDFS\n6. Bidirectional\n0. Exit")
+    choice = input("Enter your choice: ")
+    if choice=="1": 
+        run("bfs")
+    elif choice=="2":
+        run("dfs")
+    elif choice=="3": 
+        run("ucs")
+    elif choice=="4":
+        run("dls")
+    elif choice=="5": 
+        run("iddfs")
+    elif choice=="6": 
+        run("bi")
+    elif choice=="0": 
+        return
+
+menu()
