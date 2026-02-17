@@ -1,13 +1,11 @@
 # AIPathfinder
 
 
-#  AI Pathfinder — Uninformed Search Visualization
+#  AI Pathfinder, Uninformed Search Visualization
 
 This project implements and visualizes multiple uninformed search algorithms on a 10×10 grid environment. The goal is to demonstrate how different "blind" search strategies explore the grid to find a path from the Start node (S) to the Target node (T) while avoiding obstacles.
 
 The visualization shows the frontier, explored nodes, and final path for each algorithm.
-
----
 
 ## Features
 
@@ -25,9 +23,7 @@ The visualization shows the frontier, explored nodes, and final path for each al
   * Iterative Deepening DFS (IDDFS)
   * Bidirectional BFS
 
----
-
-## 🧠 Algorithms Implemented
+## Algorithms Implemented
 
 ### Breadth-First Search (BFS)
 
@@ -63,8 +59,6 @@ The visualization shows the frontier, explored nodes, and final path for each al
 * Searches simultaneously from start and goal
 * Meets in the middle
 * Faster in many cases
-
-
 
 ##  Visualization 
 
@@ -117,7 +111,7 @@ If you prefer Jupyter:
 
 %run main.py
 
- The visualization window will open and the menu will appear in the output.
+The visualization window will open and the menu will appear in the output.
 
 
 ##  Expected Behavior
