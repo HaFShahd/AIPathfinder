@@ -167,3 +167,38 @@ def ucs(grid, start, goal):
 
         draw_grid(grid, start, goal, frontier, explored, [], "UCS")
     return None
+
+def dls(grid, start, goal, limit=10, title="DLS"):
+    parent = {start: None}
+    visited = set()
+    explored = set()
+
+    def dfs_limit(node, depth):
+        frontier = {node}
+        explored.add(node)
+        if node == goal:
+            return True
+        if depth == limit:
+            return False
+
+        visited.add(node)
+        for nbr in get_neighbors(node, grid):
+            if nbr not in visited:
+                parent[nbr] = node
+                if dfs_limit(nbr, depth+1):
+                    return True
+        draw_grid(grid, start, goal, frontier, explored, [], f"{title} (limit={limit})")
+        return False
+
+    found = dfs_limit(start, 0)
+    if found:
+        return build_path(parent, start, goal)
+    return None
+
+def iddfs(grid, start, goal, max_depth=15):
+    for depth in range(max_depth):
+        path = dls(grid, start, goal, limit=depth, title="IDDFS")
+        if path:
+            return path
+    return None
+
