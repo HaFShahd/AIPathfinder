@@ -141,3 +141,29 @@ def dfs(grid, start, goal):
 
         draw_grid(grid, start, goal, frontier, explored, [], "DFS")
     return None
+
+def ucs(grid, start, goal):
+    pq = [(0, start)]
+    best = {start: 0}
+    parent = {start: None}
+    frontier = {start}
+    explored = set()
+
+    while pq:
+        cost, node = heapq.heappop(pq)
+        frontier.discard(node)
+        explored.add(node)
+
+        if node == goal:
+            return build_path(parent, start, goal)
+
+        for nbr in get_neighbors(node, grid):
+            new_cost = cost + 1
+            if new_cost < best.get(nbr, float("inf")):
+                best[nbr] = new_cost
+                parent[nbr] = node
+                heapq.heappush(pq, (new_cost, nbr))
+                frontier.add(nbr)
+
+        draw_grid(grid, start, goal, frontier, explored, [], "UCS")
+    return None
